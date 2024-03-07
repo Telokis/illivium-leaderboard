@@ -1,95 +1,106 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import React, { Suspense } from "react";
+import { illiviumCharacters, loadCharacters } from "$/app/loadData";
+import {
+  Alert,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Box,
+  Paper,
+} from "@mui/material";
+import { Character } from "$/types/Character";
+import SpecImage from "$/components/SpecImage";
+import ClassImage from "$/components/ClassImage";
+import { StyledTableRow } from "$/components/StyledTableRow";
+import Link from "next/link";
+import { getRankColor } from "$/helpers/getRankColor";
 
-export default function Home() {
+const wowClassToColor = {
+  "Death Knight": "#C41F3B",
+  "Demon Hunter": "#A330C9",
+  Druid: "#FF7D0A",
+  Evoker: "#33937F",
+  Hunter: "#ABD473",
+  Mage: "#40C7EB",
+  Monk: "#00FF96",
+  Paladin: "#F58CBA",
+  Priest: "#FFFFFF",
+  Rogue: "#FFF569",
+  Shaman: "#0070DE",
+  Warlock: "#8787ED",
+  Warrior: "#C79C6E",
+};
+
+function CharacterTable({ characters }: { characters: Character[] }) {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <TableContainer component={Paper}>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Rank</TableCell>
+            <TableCell>Spec</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Score</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {characters.map((character, i) => (
+            <StyledTableRow key={character.name}>
+              <TableCell>{i + 1}</TableCell>
+              <TableCell>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
+                  <ClassImage size={27} klass={character.class} />
+                  <SpecImage size={27} klass={character.class} spec={character.active_spec_name} />
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Link
+                  style={{ color: wowClassToColor[character.class], textDecoration: "none" }}
+                  href={`https://raider.io/characters/${character.region}/${character.realm}/${character.name}`}
+                >
+                  {character.name}
+                </Link>
+              </TableCell>
+              <TableCell>
+                <span
+                  style={{
+                    color: getRankColor(character.mythic_plus_scores_by_season[0].scores.all),
+                  }}
+                >
+                  {Math.ceil(character.mythic_plus_scores_by_season[0].scores.all)}
+                </span>
+              </TableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
+
+const CharactersPage = async () => {
+  try {
+    const chars = await loadCharacters(illiviumCharacters);
+
+    return <CharacterTable characters={chars} />;
+  } catch (error) {
+    console.error(error);
+    return <Alert severity="error">{(error as Error).toString()}</Alert>;
+  }
+};
+
+const Page = () => (
+  <Suspense>
+    <CharactersPage />
+  </Suspense>
+);
+
+export default Page;
