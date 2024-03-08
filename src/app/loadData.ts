@@ -41,6 +41,7 @@ export const illiviumCharacters: CharacterSpec[] = [
   { name: "Therataur", realm: "ysondre", region: "eu" },
   { name: "Wøøble", realm: "ysondre", region: "eu" },
   { name: "Kesium", realm: "ysondre", region: "eu" },
+  { name: "Künlüne", realm: "ysondre", region: "eu" },
   { name: "Krobina", realm: "ysondre", region: "eu" },
   { name: "Mcgønagall", realm: "ysondre", region: "eu" },
   { name: "Abigord", realm: "ysondre", region: "eu" },

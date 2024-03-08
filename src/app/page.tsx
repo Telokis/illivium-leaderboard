@@ -63,7 +63,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
               </TableCell>
               <TableCell>
                 <Link
-                  style={{ color: wowClassToColor[character.class], textDecoration: "none" }}
+                  style={{ color: wowClassToColor[character.class] }}
                   href={`https://raider.io/characters/${character.region}/${character.realm}/${character.name}`}
                 >
                   {character.name}
