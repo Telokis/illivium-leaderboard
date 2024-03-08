@@ -4,6 +4,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "$/theme";
 import "./global.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Illivium Leaderboard",
@@ -22,6 +24,8 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <CssBaseline />
             {children}
+            <Analytics />
+            <SpeedInsights />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
