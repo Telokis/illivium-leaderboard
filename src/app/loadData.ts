@@ -12,7 +12,7 @@ export async function loadCharacter(character: CharacterSpec): Promise<Character
   // const url = `https://raider.io/api/v1/characters/profile?region=${region}&realm=${realm}&name=${name}&fields=gear%2Cmythic_plus_scores_by_season%3Acurrent%2Cmythic_plus_best_runs%2Cmythic_plus_alternate_runs`;
   const url = `https://raider.io/api/v1/characters/profile?region=${region}&realm=${realm}&name=${name}&fields=gear%2Cmythic_plus_scores_by_season%3Acurrent`;
 
-  const response = await fetch(url);
+  const response = await fetch(url, { next: { revalidate: 5 * 60 } });
 
   if (!response.ok) {
     console.error("Error loading character:", response);
