@@ -39,7 +39,6 @@ export async function loadCharacters(characters: CharacterSpec[]) {
 // Static array of character specs
 export const illiviumCharacters: CharacterSpec[] = [
   { name: "Aasklépiøs", realm: "ysondre", region: "eu" },
-  { name: "Abigord", realm: "ysondre", region: "eu" },
   { name: "Aeternos", realm: "ysondre", region: "eu" },
   { name: "Alaïr", realm: "ysondre", region: "eu" },
   { name: "Alania", realm: "ysondre", region: "eu" },
