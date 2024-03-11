@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import { illiviumCharacters, loadCharacters } from "$/app/loadData";
 import {
   Alert,
   Table,
@@ -17,6 +16,7 @@ import ClassImage from "$/components/ClassImage";
 import { StyledTableRow } from "$/components/StyledTableRow";
 import Link from "next/link";
 import { getRankColor } from "$/helpers/getRankColor";
+import { getBaseUrl } from "$/helpers/getBaseUrl";
 
 const wowClassToColor = {
   "Death Knight": "#C41F3B",
@@ -88,7 +88,9 @@ function CharacterTable({ characters }: { characters: Character[] }) {
 
 const CharactersPage = async () => {
   try {
-    const chars = await loadCharacters(illiviumCharacters);
+    const chars: Array<Character> = await fetch(`${getBaseUrl()}/api/leaderboard`, {
+      next: { revalidate: 10 * 60 },
+    }).then((res) => res.json());
 
     return <CharacterTable characters={chars} />;
   } catch (error) {
