@@ -14,7 +14,5 @@ export async function loadGuildMembers(guild: GuildSpec): Promise<Array<GuildMem
 
   const data = await response.json();
 
-  console.log(data);
-
   return (data.members as Array<RawGuildMember>).map((c) => c.character);
 }

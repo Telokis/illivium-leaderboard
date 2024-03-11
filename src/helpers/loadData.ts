@@ -1,7 +1,6 @@
 import { Character } from "$/types/Character";
-import { GuildMember, GuildSpec, RawGuildMember } from "$/types/GuildSpec";
+import { GuildSpec } from "$/types/GuildSpec";
 import { loadGuildMembers } from "./loadGuildMembers";
-import { promiseBatch } from "./promiseBatch";
 
 export interface CharacterSpec {
   name: string;
@@ -28,12 +27,7 @@ export async function loadCharacter(character: CharacterSpec): Promise<Character
 // Function to load multiple characters from a static array of character specs
 // Also sort characters by descending score
 export async function loadCharacters(characters: CharacterSpec[]) {
-  return promiseBatch(
-    10,
-    loadCharacter,
-    characters.map((c) => [c] as [CharacterSpec]),
-    500,
-  ).then((characters) => {
+  return Promise.all(characters.map(loadCharacter)).then((characters) => {
     return characters.sort((a, b) => {
       const aScore = a.mythic_plus_scores_by_season[0].scores.all;
       const bScore = b.mythic_plus_scores_by_season[0].scores.all;

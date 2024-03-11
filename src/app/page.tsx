@@ -16,7 +16,8 @@ import ClassImage from "$/components/ClassImage";
 import { StyledTableRow } from "$/components/StyledTableRow";
 import Link from "next/link";
 import { getRankColor } from "$/helpers/getRankColor";
-import { getBaseUrl } from "$/helpers/getBaseUrl";
+import { loadAllCharactersFromGuilds } from "$/helpers/loadData";
+import { guilds } from "$/static-data";
 
 const wowClassToColor = {
   "Death Knight": "#C41F3B",
@@ -88,9 +89,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
 
 const CharactersPage = async () => {
   try {
-    const chars: Array<Character> = await fetch(`${getBaseUrl()}/api/leaderboard`, {
-      next: { revalidate: 10 * 60 },
-    }).then((res) => res.json());
+    const chars = await loadAllCharactersFromGuilds(guilds);
 
     return <CharacterTable characters={chars} />;
   } catch (error) {
