@@ -7,6 +7,7 @@ export async function promiseBatch<F extends Func>(
   batchSize: number,
   handler: F,
   args: BatchArgs<F>,
+  waitBetweenBatches = 0,
 ): Promise<BatchResult<F>> {
   let index = 0;
   const results: BatchResult<F> = new Array(args.length);
@@ -20,6 +21,10 @@ export async function promiseBatch<F extends Func>(
 
       results[i] = result;
 
+      if (waitBetweenBatches > 0) {
+        await new Promise((resolve) => setTimeout(resolve, waitBetweenBatches));
+      }
+
       return await next();
     }
   };
@@ -27,24 +32,4 @@ export async function promiseBatch<F extends Func>(
   await Promise.all(new Array(batchSize).fill(0).map(() => next()));
 
   return results;
-}
-
-type SettledReturnType<F extends Func> =
-  | {
-      status: "fulfilled";
-      value: Awaited<ReturnType<F>>;
-    }
-  | { status: "rejected"; reason: unknown };
-
-export async function promiseBatchSettled<F extends Func>(
-  batchSize: number,
-  handler: F,
-  args: BatchArgs<F>,
-) {
-  const wrapper: (...args2: Parameters<F>) => SettledReturnType<F> = (...subArgs: Parameters<F>) =>
-    handler(...subArgs)
-      .then((res: unknown) => ({ status: "fulfilled", value: res }))
-      .catch((err: unknown) => ({ status: "rejected", reason: err }));
-
-  return await promiseBatch(batchSize, wrapper, args);
 }

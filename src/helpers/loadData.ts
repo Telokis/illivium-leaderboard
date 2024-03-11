@@ -31,6 +31,7 @@ export async function loadCharacters(characters: CharacterSpec[]) {
     10,
     loadCharacter,
     characters.map((c) => [c] as [CharacterSpec]),
+    500,
   ).then((characters) => {
     return characters.sort((a, b) => {
       const aScore = a.mythic_plus_scores_by_season[0].scores.all;
