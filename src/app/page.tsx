@@ -76,7 +76,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
                     color: getRankColor(character.mythic_plus_scores_by_season[0].scores.all),
                   }}
                 >
-                  {Math.ceil(character.mythic_plus_scores_by_season[0].scores.all)}
+                  {Math.floor(character.mythic_plus_scores_by_season[0].scores.all)}
                 </span>
               </TableCell>
             </StyledTableRow>
