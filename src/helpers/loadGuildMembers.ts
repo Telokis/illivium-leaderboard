@@ -1,4 +1,4 @@
-import { GuildSpec } from "$/types/GuildSpec";
+import { GuildMember, GuildSpec } from "$/types/GuildSpec";
 
 export async function loadGuildMembers(guild: GuildSpec): Promise<Array<GuildMember>> {
   const url = `https://raider.io/api/v1/guilds/profile?region=${guild.region}&realm=${guild.realm}&name=${guild.name}&fields=members`;
