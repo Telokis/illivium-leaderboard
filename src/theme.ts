@@ -43,6 +43,11 @@ const theme = createTheme({
         }),
       },
     },
+    MuiButton: {
+      defaultProps: {
+        variant: "outlined",
+      },
+    },
   },
 });
 

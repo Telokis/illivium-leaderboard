@@ -13,26 +13,17 @@ import {
 import { Character } from "$/types/Character";
 import SpecImage from "$/components/SpecImage";
 import ClassImage from "$/components/ClassImage";
-import { StyledTableRow } from "$/components/StyledTableRow";
 import Link from "next/link";
 import { getRankColor } from "$/helpers/getRankColor";
 import { loadAllCharactersFromGuilds } from "$/helpers/loadData";
 import { guilds } from "$/static-data";
+import { Metadata } from "next";
+import styles from "./styles.module.css";
+import { getClassColor } from "$/helpers/getClassColor";
 
-const wowClassToColor = {
-  "Death Knight": "#C41F3B",
-  "Demon Hunter": "#A330C9",
-  Druid: "#FF7D0A",
-  Evoker: "#33937F",
-  Hunter: "#ABD473",
-  Mage: "#40C7EB",
-  Monk: "#00FF96",
-  Paladin: "#F58CBA",
-  Priest: "#FFFFFF",
-  Rogue: "#FFF569",
-  Shaman: "#0070DE",
-  Warlock: "#8787ED",
-  Warrior: "#C79C6E",
+export const metadata: Metadata = {
+  title: "Classement M+ Illivium",
+  description: "Comparez votre score M+ avec les autres membres de la guilde Illivium.",
 };
 
 function CharacterTable({ characters }: { characters: Character[] }) {
@@ -49,7 +40,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
         </TableHead>
         <TableBody>
           {characters.map((character, i) => (
-            <StyledTableRow key={character.name}>
+            <TableRow className={styles.styledTableRow} key={character.name}>
               <TableCell>{i + 1}</TableCell>
               <TableCell>
                 <Box
@@ -64,7 +55,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
               </TableCell>
               <TableCell>
                 <Link
-                  style={{ color: wowClassToColor[character.class] }}
+                  style={{ color: getClassColor(character.class) }}
                   href={`https://raider.io/characters/${character.region}/${character.realm}/${character.name}`}
                 >
                   {character.name}
@@ -79,7 +70,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
                   {Math.floor(character.mythic_plus_scores_by_season[0].scores.all)}
                 </span>
               </TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
@@ -87,21 +78,8 @@ function CharacterTable({ characters }: { characters: Character[] }) {
   );
 }
 
-const CharactersPage = async () => {
-  try {
-    const chars = await loadAllCharactersFromGuilds(guilds);
+export default async function Page() {
+  const chars = await loadAllCharactersFromGuilds(guilds);
 
-    return <CharacterTable characters={chars} />;
-  } catch (error) {
-    console.error(error);
-    return <Alert severity="error">{(error as Error).toString()}</Alert>;
-  }
-};
-
-const Page = () => (
-  <Suspense>
-    <CharactersPage />
-  </Suspense>
-);
-
-export default Page;
+  return <CharacterTable characters={chars} />;
+}
