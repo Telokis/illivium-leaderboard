@@ -48,6 +48,11 @@ const theme = createTheme({
         variant: "outlined",
       },
     },
+    MuiPaper: {
+      defaultProps: {
+        square: true,
+      },
+    },
   },
 });
 
