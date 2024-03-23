@@ -6,3 +6,8 @@ a:hover {
   /* text-decoration: underline; */
   text-shadow: 0px 0px 2px;
 }
+
+.simple-flexbox {
+  display: flex !important;
+  gap: 5px;
+}
