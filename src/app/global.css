@@ -1,7 +1,8 @@
 a {
   text-decoration: none;
+  color: unset;
 }
-
 a:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
+  text-shadow: 0px 0px 2px;
 }

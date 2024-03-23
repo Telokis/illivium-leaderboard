@@ -1,6 +1,5 @@
-import React, { Suspense } from "react";
+import React from "react";
 import {
-  Alert,
   Table,
   TableBody,
   TableCell,
@@ -57,6 +56,7 @@ function CharacterTable({ characters }: { characters: Character[] }) {
                 <Link
                   style={{ color: getClassColor(character.class) }}
                   href={`https://raider.io/characters/${character.region}/${character.realm}/${character.name}`}
+                  target="_blank"
                 >
                   {character.name}
                 </Link>
