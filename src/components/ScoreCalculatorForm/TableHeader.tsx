@@ -21,10 +21,10 @@ export const TableHeader = () => (
     </TableRow>
     <TableRow>
       <TableCell>Dungeon</TableCell>
-      <TableCell>Level</TableCell>
-      <TableCell>Time</TableCell>
-      <TableCell>Level</TableCell>
-      <TableCell>Time</TableCell>
+      <TableCell className={styles.fortifiedTableBackground}>Level</TableCell>
+      <TableCell className={styles.fortifiedTableBackground}>Time</TableCell>
+      <TableCell className={styles.tyrannicalTableBackground}>Level</TableCell>
+      <TableCell className={styles.tyrannicalTableBackground}>Time</TableCell>
     </TableRow>
   </TableHead>
 );

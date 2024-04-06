@@ -5,3 +5,12 @@
 .headerFlexbox {
   justify-content: center;
 }
+
+.fortifiedTableBackground {
+  background-color: #2c4947;
+  border-bottom-color: #1f3332 !important;
+}
+
+.tyrannicalTableBackground {
+  background-color: #4a402c;
+}

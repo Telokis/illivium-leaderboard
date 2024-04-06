@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import React from "react";
 import type { CharClass } from "$/types/Character";
 import CharIconImage from "./CharIconImage";
@@ -22,13 +21,5 @@ const classOffsets = {
 export default function ClassImage({ klass, size }: { klass: CharClass; size?: number }) {
   const offset = classOffsets[klass];
 
-  return (
-    <CharIconImage
-      size={size}
-      baseSize={64}
-      offset={offset}
-      title={klass}
-      imageUrl="/classes_sprites.webp"
-    />
-  );
+  return <CharIconImage size={size} baseSize={64} offset={offset} title={klass} imageUrl="/classes_sprites.webp" />;
 }
