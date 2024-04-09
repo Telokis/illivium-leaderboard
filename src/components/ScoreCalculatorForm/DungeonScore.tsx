@@ -1,8 +1,9 @@
-import { TextField, TextFieldProps } from "@mui/material";
+import { TextField, TextFieldProps, Typography } from "@mui/material";
 import DurationInput from "../DurationInput/DurationInput";
 import styles from "./styles.module.css";
 import { DungeonSpec } from "$/types/DungeonSpec";
 import { computeScore } from "$/helpers/computeScore";
+import classNames from "classnames";
 
 export interface DungeonScoreProps {
   /** 0 if not timed */
@@ -51,14 +52,27 @@ export const DungeonScore = ({
   };
 
   return (
-    <div>
+    <div className={styles.dungeonScoreBlock}>
+      {/* <div className={styles.dungeonScoreBlockPadding} /> */}
       <TextField
         {...levelFieldProps}
         defaultValue={level}
         onChange={(e) => onLevelChange?.(parseInt(e.target.value, 10))}
         label="Level"
       />
-      <DurationInput {...timeFieldProps} label="Time" defaultValue={time} onChange={onTimeChange} />
+      <DurationInput
+        {...timeFieldProps}
+        label="Time"
+        defaultValue={time}
+        onChange={onTimeChange}
+      />
+      <Typography
+        className={classNames(styles.scoreText, {
+          [styles.biggerScore]: isBigger,
+        })}
+      >
+        {score}
+      </Typography>
     </div>
   );
 };

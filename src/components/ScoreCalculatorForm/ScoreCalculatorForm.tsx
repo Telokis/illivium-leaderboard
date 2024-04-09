@@ -91,7 +91,7 @@ export default function ScoreCalculatorForm() {
               );
             })}
             <TableRow>
-              <TableCell colSpan={5}></TableCell>
+              <TableCell colSpan={3}></TableCell>
               <TableCell align="right">
                 <Typography>{totalScore.toFixed(1)}</Typography>
               </TableCell>

@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, TableCell, TableRow, TextField, TextFieldProps, Typography } from "@mui/material";
+import {
+  Box,
+  TableCell,
+  TableRow,
+  TextField,
+  TextFieldProps,
+  Typography,
+} from "@mui/material";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import { DungeonSpec } from "$/types/DungeonSpec";
@@ -33,8 +40,16 @@ const DungeonRow = ({
     tyrannicalTimeQueryKey,
   } = getDungeonQueryParamKeys(dungeon);
 
-  const fortifiedScore = computeScore(fortifiedLevel, fortifiedTime, dungeon.referenceTime);
-  const tyrannicalScore = computeScore(tyrannicalLevel, tyrannicalTime, dungeon.referenceTime);
+  const fortifiedScore = computeScore(
+    fortifiedLevel,
+    fortifiedTime,
+    dungeon.referenceTime,
+  );
+  const tyrannicalScore = computeScore(
+    tyrannicalLevel,
+    tyrannicalTime,
+    dungeon.referenceTime,
+  );
 
   const score =
     Math.max(fortifiedScore, tyrannicalScore) * 1.5 +
@@ -58,22 +73,32 @@ const DungeonRow = ({
           {dungeon.fullName}
         </Box>
       </TableCell>
-      <TableCell>
+      <TableCell className={styles.fortifiedTableBackground}>
         <DungeonScore
           dungeon={dungeon}
           level={fortifiedLevel}
           time={fortifiedTime}
-          onLevelChange={(value) => updateFunction(fortifiedLevelQueryKey, String(value))}
-          onTimeChange={(value) => updateFunction(fortifiedTimeQueryKey, String(value))}
+          isBigger={fortifiedScore > tyrannicalScore}
+          onLevelChange={(value) =>
+            updateFunction(fortifiedLevelQueryKey, String(value))
+          }
+          onTimeChange={(value) =>
+            updateFunction(fortifiedTimeQueryKey, String(value))
+          }
         />
       </TableCell>
-      <TableCell>
+      <TableCell className={styles.tyrannicalTableBackground}>
         <DungeonScore
           dungeon={dungeon}
           level={tyrannicalLevel}
           time={tyrannicalTime}
-          onLevelChange={(value) => updateFunction(tyrannicalLevelQueryKey, String(value))}
-          onTimeChange={(value) => updateFunction(tyrannicalTimeQueryKey, String(value))}
+          isBigger={tyrannicalScore >= fortifiedScore}
+          onLevelChange={(value) =>
+            updateFunction(tyrannicalLevelQueryKey, String(value))
+          }
+          onTimeChange={(value) =>
+            updateFunction(tyrannicalTimeQueryKey, String(value))
+          }
         />
       </TableCell>
       <TableCell align="right">

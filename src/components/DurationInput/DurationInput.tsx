@@ -3,7 +3,7 @@
 import React, { useState, forwardRef, FocusEventHandler, useMemo } from "react";
 import { pad } from "$/helpers/padding";
 import { parseIntFallback } from "$/helpers/parseIntFallback";
-import { FormControl, Input, InputLabel } from "@mui/material";
+import { TextField } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import styles from "./styles.module.css";
 
@@ -56,7 +56,6 @@ export default function DurationInput({
   label,
 }: DurationInputProps) {
   const [textValue, setTextValue] = useState<string>(secondsToText(defaultValue ?? 0));
-  const elemId = useMemo(() => Math.random().toString(36).substring(7), []);
 
   const onChangeHandler = (value: string) => {
     if (value.length === 5) {
@@ -66,17 +65,17 @@ export default function DurationInput({
   };
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel htmlFor={elemId}>{label}</InputLabel>
-      <Input
-        id={elemId}
-        onFocus={onFocus}
-        className={className + " " + styles.durationInput}
-        value={textValue}
-        onChange={(e) => onChangeHandler(e.target.value)}
-        name="duration"
-        inputComponent={TextMaskCustom as any}
-      />
-    </FormControl>
+    <TextField
+      label={label}
+      onFocus={onFocus}
+      className={className + " " + styles.durationInput}
+      value={textValue}
+      onChange={(e) => onChangeHandler(e.target.value)}
+      name="duration"
+      InputProps={{
+        inputComponent: TextMaskCustom as any,
+      }}
+      variant="standard"
+    />
   );
 }
