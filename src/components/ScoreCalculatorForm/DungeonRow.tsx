@@ -73,34 +73,32 @@ const DungeonRow = ({
           {dungeon.fullName}
         </Box>
       </TableCell>
-      <TableCell className={styles.fortifiedTableBackground}>
-        <DungeonScore
-          dungeon={dungeon}
-          level={fortifiedLevel}
-          time={fortifiedTime}
-          isBigger={fortifiedScore > tyrannicalScore}
-          onLevelChange={(value) =>
-            updateFunction(fortifiedLevelQueryKey, String(value))
-          }
-          onTimeChange={(value) =>
-            updateFunction(fortifiedTimeQueryKey, String(value))
-          }
-        />
-      </TableCell>
-      <TableCell className={styles.tyrannicalTableBackground}>
-        <DungeonScore
-          dungeon={dungeon}
-          level={tyrannicalLevel}
-          time={tyrannicalTime}
-          isBigger={tyrannicalScore >= fortifiedScore}
-          onLevelChange={(value) =>
-            updateFunction(tyrannicalLevelQueryKey, String(value))
-          }
-          onTimeChange={(value) =>
-            updateFunction(tyrannicalTimeQueryKey, String(value))
-          }
-        />
-      </TableCell>
+      <DungeonScore
+        className={styles.fortifiedTableBackground}
+        dungeon={dungeon}
+        level={fortifiedLevel}
+        time={fortifiedTime}
+        isBigger={fortifiedScore > tyrannicalScore}
+        onLevelChange={(value) =>
+          updateFunction(fortifiedLevelQueryKey, String(value))
+        }
+        onTimeChange={(value) =>
+          updateFunction(fortifiedTimeQueryKey, String(value))
+        }
+      />
+      <DungeonScore
+        className={styles.tyrannicalTableBackground}
+        dungeon={dungeon}
+        level={tyrannicalLevel}
+        time={tyrannicalTime}
+        isBigger={tyrannicalScore >= fortifiedScore}
+        onLevelChange={(value) =>
+          updateFunction(tyrannicalLevelQueryKey, String(value))
+        }
+        onTimeChange={(value) =>
+          updateFunction(tyrannicalTimeQueryKey, String(value))
+        }
+      />
       <TableCell align="right">
         <Typography>{score.toFixed(1)}</Typography>
       </TableCell>

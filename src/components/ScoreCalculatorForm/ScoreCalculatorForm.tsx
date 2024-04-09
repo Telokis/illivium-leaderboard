@@ -9,7 +9,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import styles from "./styles.module.css";
 import { dungeons } from "$/static-data";
 import { TableHeader } from "./TableHeader";
@@ -19,6 +24,7 @@ import { parseIntFallback } from "$/helpers/parseIntFallback";
 import { computeScore } from "$/helpers/computeScore";
 import { getDungeonQueryParamKeys } from "$/helpers/getDungeonQueryParamKeys";
 import { DungeonSpec } from "$/types/DungeonSpec";
+import classNames from "classnames";
 
 function extractDungeonInfoFromQueryParams(
   dungeon: DungeonSpec,
@@ -31,10 +37,22 @@ function extractDungeonInfoFromQueryParams(
     tyrannicalTimeQueryKey,
   } = getDungeonQueryParamKeys(dungeon);
 
-  const fortifiedLevel = parseIntFallback(searchParams.get(fortifiedLevelQueryKey) ?? "0", 0);
-  const fortifiedTime = parseIntFallback(searchParams.get(fortifiedTimeQueryKey) ?? "0", 0);
-  const tyrannicalLevel = parseIntFallback(searchParams.get(tyrannicalLevelQueryKey) ?? "0", 0);
-  const tyrannicalTime = parseIntFallback(searchParams.get(tyrannicalTimeQueryKey) ?? "0", 0);
+  const fortifiedLevel = parseIntFallback(
+    searchParams.get(fortifiedLevelQueryKey) ?? "0",
+    0,
+  );
+  const fortifiedTime = parseIntFallback(
+    searchParams.get(fortifiedTimeQueryKey) ?? "0",
+    0,
+  );
+  const tyrannicalLevel = parseIntFallback(
+    searchParams.get(tyrannicalLevelQueryKey) ?? "0",
+    0,
+  );
+  const tyrannicalTime = parseIntFallback(
+    searchParams.get(tyrannicalTimeQueryKey) ?? "0",
+    0,
+  );
 
   return { fortifiedLevel, fortifiedTime, tyrannicalLevel, tyrannicalTime };
 }
@@ -58,8 +76,16 @@ export default function ScoreCalculatorForm() {
     const { fortifiedLevel, fortifiedTime, tyrannicalLevel, tyrannicalTime } =
       extractDungeonInfoFromQueryParams(dungeon, searchParams);
 
-    const fortifiedScore = computeScore(fortifiedLevel, fortifiedTime, dungeon.referenceTime);
-    const tyrannicalScore = computeScore(tyrannicalLevel, tyrannicalTime, dungeon.referenceTime);
+    const fortifiedScore = computeScore(
+      fortifiedLevel,
+      fortifiedTime,
+      dungeon.referenceTime,
+    );
+    const tyrannicalScore = computeScore(
+      tyrannicalLevel,
+      tyrannicalTime,
+      dungeon.referenceTime,
+    );
 
     const score =
       Math.max(fortifiedScore, tyrannicalScore) * 1.5 +
@@ -75,8 +101,12 @@ export default function ScoreCalculatorForm() {
           <TableHeader />
           <TableBody>
             {dungeons.map((dungeon) => {
-              const { fortifiedLevel, fortifiedTime, tyrannicalLevel, tyrannicalTime } =
-                extractDungeonInfoFromQueryParams(dungeon, searchParams);
+              const {
+                fortifiedLevel,
+                fortifiedTime,
+                tyrannicalLevel,
+                tyrannicalTime,
+              } = extractDungeonInfoFromQueryParams(dungeon, searchParams);
 
               return (
                 <DungeonRow
@@ -90,15 +120,12 @@ export default function ScoreCalculatorForm() {
                 />
               );
             })}
-            <TableRow>
-              <TableCell colSpan={3}></TableCell>
-              <TableCell align="right">
-                <Typography>{totalScore.toFixed(1)}</Typography>
-              </TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
+      <div className={classNames(styles.totalScoreBlock)}>
+        <Typography>Total Score: {totalScore.toFixed(1)}</Typography>
+      </div>
     </Paper>
   );
 }

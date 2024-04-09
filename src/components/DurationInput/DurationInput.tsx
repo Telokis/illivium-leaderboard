@@ -3,7 +3,7 @@
 import React, { useState, forwardRef, FocusEventHandler, useMemo } from "react";
 import { pad } from "$/helpers/padding";
 import { parseIntFallback } from "$/helpers/parseIntFallback";
-import { TextField } from "@mui/material";
+import { SxProps, TextField } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import styles from "./styles.module.css";
 
@@ -13,10 +13,13 @@ export interface DurationInputProps {
   onFocus?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   className?: string;
   label?: string;
+  sx?: SxProps;
 }
 
 function textToSeconds(value: string): number {
-  const [minutes, seconds] = value.split(":").map((n) => parseIntFallback(n, 0));
+  const [minutes, seconds] = value
+    .split(":")
+    .map((n) => parseIntFallback(n, 0));
 
   return minutes * 60 + seconds;
 }
@@ -41,7 +44,9 @@ const TextMaskCustom = forwardRef<HTMLInputElement, CustomProps>(
         {...other}
         mask="00:00"
         inputRef={ref}
-        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
+        onAccept={(value: any) =>
+          onChange({ target: { name: props.name, value } })
+        }
         overwrite
       />
     );
@@ -54,8 +59,11 @@ export default function DurationInput({
   onFocus,
   className,
   label,
+  sx,
 }: DurationInputProps) {
-  const [textValue, setTextValue] = useState<string>(secondsToText(defaultValue ?? 0));
+  const [textValue, setTextValue] = useState<string>(
+    secondsToText(defaultValue ?? 0),
+  );
 
   const onChangeHandler = (value: string) => {
     if (value.length === 5) {
@@ -76,6 +84,7 @@ export default function DurationInput({
         inputComponent: TextMaskCustom as any,
       }}
       variant="standard"
+      sx={sx}
     />
   );
 }

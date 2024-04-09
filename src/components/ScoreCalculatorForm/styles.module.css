@@ -29,23 +29,22 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 .numberField:active {
-  background-color: rgba(0, 0, 0, 0.60);
-}
-
-.dungeonScoreBlock {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  vertical-align: middle;
-  align-items: center;
-}
-.dungeonScoreBlockPadding {
-  width: 30px;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .scoreText {
-  width: 50px;
+  width: 60px;
 }
 .scoreText.biggerScore {
   font-weight: bold;
+}
+
+.totalScoreBlock {
+  background-color: #333333;
+  text-align: right;
+  padding: 10px 16px;
+}
+.totalScoreBlock > p {
+  font-weight: bold !important;
+  color: #fff;
 }
