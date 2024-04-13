@@ -1,7 +1,10 @@
 import {
+  Box,
+  Button,
   TableCell,
   TextField,
   TextFieldProps,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import DurationInput from "../DurationInput/DurationInput";
@@ -92,11 +95,43 @@ export const DungeonScore = ({
         />
       </TableCell>
       <TableCell className={className} align="center">
-        <DurationInput
-          {...timeFieldProps}
-          defaultValue={time}
-          onChange={onTimeChange}
-        />
+        <Box flexDirection="column" alignItems="center" display="flex">
+          <DurationInput
+            {...timeFieldProps}
+            value={time}
+            onChange={onTimeChange}
+          />
+          <Box display="flex" gap="1px">
+            <Tooltip title="Sets the time to a +3">
+              <Button
+                className={styles.timeButton}
+                onClick={() =>
+                  onTimeChange?.(Math.floor((dungeon.referenceTime - 1) * 0.6))
+                }
+              >
+                +3
+              </Button>
+            </Tooltip>
+            <Tooltip title="Sets the time to a +2">
+              <Button
+                className={styles.timeButton}
+                onClick={() =>
+                  onTimeChange?.(Math.floor((dungeon.referenceTime - 1) * 0.8))
+                }
+              >
+                +2
+              </Button>
+            </Tooltip>
+            <Tooltip title="Sets the time to a +1">
+              <Button
+                className={styles.timeButton}
+                onClick={() => onTimeChange?.(dungeon.referenceTime - 1)}
+              >
+                +1
+              </Button>
+            </Tooltip>
+          </Box>
+        </Box>
       </TableCell>
       <TableCell className={className} align="right">
         <Typography

@@ -53,6 +53,13 @@ const theme = createTheme({
         square: true,
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: "#545454",
+        },
+      },
+    },
   },
 });
 

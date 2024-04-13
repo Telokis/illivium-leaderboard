@@ -1,6 +1,11 @@
 "use client";
 
-import React, { useState, forwardRef, FocusEventHandler, useMemo } from "react";
+import React, {
+  useState,
+  forwardRef,
+  FocusEventHandler,
+  useEffect,
+} from "react";
 import { pad } from "$/helpers/padding";
 import { parseIntFallback } from "$/helpers/parseIntFallback";
 import { SxProps, TextField } from "@mui/material";
@@ -8,7 +13,7 @@ import { IMaskInput } from "react-imask";
 import styles from "./styles.module.css";
 
 export interface DurationInputProps {
-  defaultValue?: number;
+  value: number;
   onChange?: (value: number) => void;
   onFocus?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   className?: string;
@@ -54,16 +59,18 @@ const TextMaskCustom = forwardRef<HTMLInputElement, CustomProps>(
 );
 
 export default function DurationInput({
-  defaultValue,
+  value,
   onChange,
   onFocus,
   className,
   label,
   sx,
 }: DurationInputProps) {
-  const [textValue, setTextValue] = useState<string>(
-    secondsToText(defaultValue ?? 0),
-  );
+  const [textValue, setTextValue] = useState<string>(secondsToText(value));
+
+  useEffect(() => {
+    setTextValue(secondsToText(value));
+  }, [value]);
 
   const onChangeHandler = (value: string) => {
     if (value.length === 5) {
