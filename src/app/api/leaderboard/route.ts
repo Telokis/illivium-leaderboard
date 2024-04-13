@@ -1,4 +1,4 @@
-import { loadAllCharactersFromGuilds } from "$/helpers/loadData";
+import { loadAllCharactersFromGuilds } from "$/helpers/loadCharacterData";
 import { guilds } from "$/static-data";
 import { type NextRequest } from "next/server";
 

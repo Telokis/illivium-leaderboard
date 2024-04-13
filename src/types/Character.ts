@@ -112,3 +112,21 @@ interface Gear {
   updated_at: string;
   item_level_equipped: number;
 }
+
+export interface CharacterDungeonInfos {
+  name: string;
+  race: string;
+  class: CharClass;
+  active_spec_name: CharSpec;
+  active_spec_role: CharRole;
+  gender: string;
+  faction: string;
+  thumbnail_url: string;
+  region: string;
+  realm: string;
+  last_crawled_at: string;
+  profile_url: string;
+  profile_banner: string;
+  mythic_plus_best_runs: Run[];
+  mythic_plus_alternate_runs: Run[];
+}

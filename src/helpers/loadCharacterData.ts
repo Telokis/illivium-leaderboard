@@ -1,4 +1,4 @@
-import { Character } from "$/types/Character";
+import { Character, CharacterDungeonInfos } from "$/types/Character";
 import { GuildSpec } from "$/types/GuildSpec";
 import { loadGuildMembers } from "./loadGuildMembers";
 
@@ -8,7 +8,9 @@ export interface CharacterSpec {
   region: string;
 }
 
-export async function loadCharacter(character: CharacterSpec): Promise<Character> {
+export async function loadCharacter(
+  character: CharacterSpec,
+): Promise<Character> {
   const { name, realm, region } = character;
 
   // const url = `https://raider.io/api/v1/characters/profile?region=${region}&realm=${realm}&name=${name}&fields=gear%2Cmythic_plus_scores_by_season%3Acurrent%2Cmythic_plus_best_runs%2Cmythic_plus_alternate_runs`;
@@ -50,4 +52,21 @@ export async function loadAllCharactersFromGuilds(
   }));
 
   return loadCharacters(characters);
+}
+
+export async function loadCharacterDungeonInfos(
+  character: CharacterSpec,
+): Promise<CharacterDungeonInfos> {
+  const { name, realm, region } = character;
+
+  const url = `https://raider.io/api/v1/characters/profile?region=${region}&realm=${realm}&name=${name}&fields=mythic_plus_best_runs%2Cmythic_plus_alternate_runs`;
+
+  const response = await fetch(url, { next: { revalidate: 10 * 60 } });
+
+  if (!response.ok) {
+    console.error("Error loading character:", response);
+    throw response;
+  }
+
+  return response.json();
 }

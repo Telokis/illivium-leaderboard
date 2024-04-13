@@ -14,7 +14,7 @@ import SpecImage from "$/components/SpecImage";
 import ClassImage from "$/components/ClassImage";
 import Link from "next/link";
 import { getRankColor } from "$/helpers/getRankColor";
-import { loadAllCharactersFromGuilds } from "$/helpers/loadData";
+import { loadAllCharactersFromGuilds } from "$/helpers/loadCharacterData";
 import { guilds } from "$/static-data";
 import { Metadata } from "next";
 import styles from "./styles.module.css";
@@ -22,7 +22,8 @@ import { getClassColor } from "$/helpers/getClassColor";
 
 export const metadata: Metadata = {
   title: "Classement M+ Illivium",
-  description: "Comparez votre score M+ avec les autres membres de la guilde Illivium.",
+  description:
+    "Comparez votre score M+ avec les autres membres de la guilde Illivium.",
 };
 
 function CharacterTable({ characters }: { characters: Character[] }) {
@@ -49,7 +50,11 @@ function CharacterTable({ characters }: { characters: Character[] }) {
                   }}
                 >
                   <ClassImage size={27} klass={character.class} />
-                  <SpecImage size={27} klass={character.class} spec={character.active_spec_name} />
+                  <SpecImage
+                    size={27}
+                    klass={character.class}
+                    spec={character.active_spec_name}
+                  />
                 </Box>
               </TableCell>
               <TableCell>
@@ -64,10 +69,14 @@ function CharacterTable({ characters }: { characters: Character[] }) {
               <TableCell>
                 <span
                   style={{
-                    color: getRankColor(character.mythic_plus_scores_by_season[0].scores.all),
+                    color: getRankColor(
+                      character.mythic_plus_scores_by_season[0].scores.all,
+                    ),
                   }}
                 >
-                  {Math.floor(character.mythic_plus_scores_by_season[0].scores.all)}
+                  {Math.floor(
+                    character.mythic_plus_scores_by_season[0].scores.all,
+                  )}
                 </span>
               </TableCell>
             </TableRow>

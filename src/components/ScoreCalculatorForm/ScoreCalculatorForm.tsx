@@ -1,12 +1,11 @@
 "use client";
 
 import {
+  Box,
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
-  TableRow,
   Typography,
 } from "@mui/material";
 import {
@@ -19,12 +18,13 @@ import styles from "./styles.module.css";
 import { dungeons } from "$/static-data";
 import { TableHeader } from "./TableHeader";
 import { DungeonRow } from "./DungeonRow";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { parseIntFallback } from "$/helpers/parseIntFallback";
 import { computeScore } from "$/helpers/computeScore";
 import { getDungeonQueryParamKeys } from "$/helpers/getDungeonQueryParamKeys";
 import { DungeonSpec } from "$/types/DungeonSpec";
 import classNames from "classnames";
+import { loadCharacterDungeonInfos } from "$/helpers/loadCharacterData";
 
 function extractDungeonInfoFromQueryParams(
   dungeon: DungeonSpec,
@@ -96,7 +96,30 @@ export default function ScoreCalculatorForm() {
 
   return (
     <Paper className={styles.wrapper}>
-      <TableContainer component={Paper}>
+      <Box p={3}>
+        <Typography variant="h4" gutterBottom>
+          M+ Score Calculator
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Welcome to the Mythic Plus Dungeon Score Calculator! This tool helps
+          you evaluate your performance in Mythic Plus dungeons by calculating
+          your score based on your highest key levels and completion times for
+          both Tyrannical and Fortified weeks.
+        </Typography>
+        <Typography variant="body1" paragraph>
+          To get started, simply fill in the highest key level you&apos;ve
+          completed and the time it took you to complete each dungeon for both
+          Tyrannical and Fortified affix weeks. The calculator will
+          automatically compute your overall score and show you how different
+          dungeon performances affect it.
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Use this tool to plan your dungeon runs strategically, prioritize
+          dungeons that will contribute most to your score, and track your
+          progress over time. Happy dungeon crawling!
+        </Typography>
+      </Box>
+      <TableContainer component={Paper} className={styles.mainScoreTable}>
         <Table size="small">
           <TableHeader />
           <TableBody>
@@ -124,7 +147,7 @@ export default function ScoreCalculatorForm() {
         </Table>
       </TableContainer>
       <div className={classNames(styles.totalScoreBlock)}>
-        <Typography>Total Score: {totalScore.toFixed(1)}</Typography>
+        <span>Total Score: {totalScore.toFixed(1)}</span>
       </div>
     </Paper>
   );
