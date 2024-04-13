@@ -134,13 +134,13 @@ export const DungeonScore = ({
         </Box>
       </TableCell>
       <TableCell className={className} align="right">
-        <Typography
+        <span
           className={classNames(styles.scoreText, {
             [styles.biggerScore]: isBigger,
           })}
         >
           {score.toFixed(1)}
-        </Typography>
+        </span>
       </TableCell>
     </>
   );
