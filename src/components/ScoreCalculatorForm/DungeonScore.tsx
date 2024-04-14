@@ -90,7 +90,7 @@ export const DungeonScore = ({
       <TableCell className={className} align="center">
         <TextField
           {...levelFieldProps}
-          defaultValue={level}
+          value={level}
           onChange={(e) => onLevelChange?.(parseInt(e.target.value, 10))}
         />
       </TableCell>
