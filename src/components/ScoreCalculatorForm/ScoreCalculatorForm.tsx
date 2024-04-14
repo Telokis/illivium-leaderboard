@@ -25,7 +25,6 @@ import { parseIntFallback } from "$/helpers/parseIntFallback";
 import { computeScore } from "$/helpers/computeScore";
 import { getDungeonQueryParamKeys } from "$/helpers/getDungeonQueryParamKeys";
 import { DungeonSpec } from "$/types/DungeonSpec";
-import classNames from "classnames";
 import ImportCharacterModal from "./ImportCharacterModal";
 import { TotalScore } from "./TotalScore";
 
