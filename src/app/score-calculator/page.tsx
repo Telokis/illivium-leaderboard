@@ -6,6 +6,9 @@ import React, { Suspense } from "react";
 export const metadata: Metadata = {
   title: "M+ Score Calculator",
   description: "Compute your M+ score with arbitrary dungeon times!",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_INDEX_VERIFICATION_CODE,
+  },
 };
 
 export default function Page() {
