@@ -1,0 +1,93 @@
+.wrapper {
+  padding-top: 20px;
+  margin-bottom: 200px;
+}
+
+.headerFlexbox {
+  justify-content: center;
+}
+
+.fortifiedTableBackground {
+  background-color: #2c4947;
+  border-bottom-color: #1f3332 !important;
+}
+
+.tyrannicalTableBackground {
+  background-color: #4a402c;
+  border-bottom-color: #30291d !important;
+}
+
+.numberField {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding-left: 5px;
+  padding-right: 5px;
+  max-width: 60px;
+}
+.numberField input {
+  text-align: center;
+}
+.numberField:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.numberField:active {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.scoreText {
+  width: 60px;
+}
+.scoreText.biggerScore {
+  font-weight: bold;
+}
+
+@keyframes scorePulseAnimation {
+  0% {
+    box-shadow: 0px 0px var(--score-pulse-box-shadow-blur-size)
+      var(--score-pulse-box-shadow-color);
+  }
+  25% {
+    box-shadow: 0px 0px calc(var(--score-pulse-box-shadow-blur-size) * 0.8)
+      var(--score-pulse-box-shadow-color);
+  }
+  50% {
+    box-shadow: 0px 0px calc(var(--score-pulse-box-shadow-blur-size) * 1.25)
+      var(--score-pulse-box-shadow-color);
+  }
+  75% {
+    box-shadow: 0px 0px calc(var(--score-pulse-box-shadow-blur-size) * 0.8)
+      var(--score-pulse-box-shadow-color);
+  }
+  100% {
+    box-shadow: 0px 0px var(--score-pulse-box-shadow-blur-size)
+      var(--score-pulse-box-shadow-color);
+  }
+}
+
+.totalScoreSpan {
+  font-weight: bold !important;
+  background-color: #00000036;
+  color: #fff;
+  font-size: 26px;
+  padding: 10px;
+  border: 2px solid white;
+}
+
+.timeButton {
+  padding: 0px 1px !important;
+  margin: 0 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  min-width: 1px !important;
+  height: 14px;
+  font-size: 10px !important;
+  border-radius: 0 !important;
+}
+.timeButton:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  text-shadow: 0px 0px 2px #fff;
+}
+
+.mainScoreTable {
+  border-top: 2px solid #7e7e7e;
+}

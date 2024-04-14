@@ -1,4 +1,5 @@
 "use client";
+
 import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
@@ -13,7 +14,7 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#1976d2",
+      main: "#2196f3",
     },
     secondary: {
       main: "#dc004e",
@@ -34,15 +35,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiAlert: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.severity === "info" && {
-            backgroundColor: "#60a5fa",
-          }),
-        }),
-      },
-    },
     MuiButton: {
       defaultProps: {
         variant: "outlined",
@@ -52,6 +44,16 @@ const theme = createTheme({
       defaultProps: {
         square: true,
       },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: "#545454",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {},
     },
   },
 });
