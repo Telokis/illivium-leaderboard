@@ -37,14 +37,19 @@ function getScoreOffset(keyTime: number, referenceTime: number) {
  * @returns The score for the given key level, key time, and reference time.
  * @see https://old.reddit.com/r/wow/comments/13vqsbw/an_accurate_formula_for_m_score_calculation_in/
  */
-export function computeScore(keyLevel: number, keyTime: number, referenceTime: number) {
+export function computeScore(
+  keyLevel: number,
+  keyTime: number,
+  referenceTime: number,
+) {
   if (keyLevel < 2) {
     return 0;
   }
 
-  let adjustedKeyLevel = keyLevel + getScoreOffset(keyTime, referenceTime);
-  let highKeyBonus = Math.max(0, keyLevel - 10);
-  let nAffixes = affixesForLevel(keyLevel);
+  const scoreOffset = getScoreOffset(keyTime, referenceTime);
+  const adjustedKeyLevel = keyLevel + scoreOffset;
+  const highKeyBonus = Math.max(0, keyLevel - 10);
+  const nAffixes = affixesForLevel(keyLevel);
 
   return 20 + adjustedKeyLevel * 5 + highKeyBonus * 2 + nAffixes * 10;
 }

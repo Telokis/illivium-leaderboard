@@ -44,6 +44,7 @@ interface CustomProps {
 const TextMaskCustom = forwardRef<HTMLInputElement, CustomProps>(
   function TextMaskCustom(props, ref) {
     const { onChange, ...other } = props;
+
     return (
       <IMaskInput
         {...other}

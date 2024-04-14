@@ -2,6 +2,8 @@
 
 import {
   Box,
+  Button,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -18,13 +20,13 @@ import styles from "./styles.module.css";
 import { dungeons } from "$/static-data";
 import { TableHeader } from "./TableHeader";
 import { DungeonRow } from "./DungeonRow";
-import { useCallback, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { parseIntFallback } from "$/helpers/parseIntFallback";
 import { computeScore } from "$/helpers/computeScore";
 import { getDungeonQueryParamKeys } from "$/helpers/getDungeonQueryParamKeys";
 import { DungeonSpec } from "$/types/DungeonSpec";
 import classNames from "classnames";
-import { loadCharacterDungeonInfos } from "$/helpers/loadCharacterData";
+import ImportCharacterModal from "./ImportCharacterModal";
 
 function extractDungeonInfoFromQueryParams(
   dungeon: DungeonSpec,
@@ -61,6 +63,7 @@ export default function ScoreCalculatorForm() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const changeParams = useCallback(
     (key: string, value: string) => {
@@ -96,6 +99,12 @@ export default function ScoreCalculatorForm() {
 
   return (
     <Paper className={styles.wrapper}>
+      <ImportCharacterModal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+      />
       <Box p={3}>
         <Typography variant="h4" gutterBottom>
           M+ Score Calculator
@@ -118,6 +127,16 @@ export default function ScoreCalculatorForm() {
           dungeons that will contribute most to your score, and track your
           progress over time. Happy dungeon crawling!
         </Typography>
+        <Box sx={{ textAlign: "right" }}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            Import Character
+          </Button>
+        </Box>
       </Box>
       <TableContainer component={Paper} className={styles.mainScoreTable}>
         <Table size="small">
@@ -149,6 +168,31 @@ export default function ScoreCalculatorForm() {
       <div className={classNames(styles.totalScoreBlock)}>
         <span>Total Score: {totalScore.toFixed(1)}</span>
       </div>
+      <Box p={2} bgcolor="#114355" color="white" textAlign="center">
+        <Typography variant="body2">
+          Code available on{" "}
+          <Link
+            href="https://github.com/telokis/illivium-leaderboard/"
+            color="inherit"
+            underline="always"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Github
+          </Link>
+          . Calculations based on the formula from{" "}
+          <Link
+            href="https://old.reddit.com/r/wow/comments/13vqsbw/an_accurate_formula_for_m_score_calculation_in/"
+            color="inherit"
+            underline="always"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Xodiv
+          </Link>{" "}
+          on Reddit.
+        </Typography>
+      </Box>
     </Paper>
   );
 }
