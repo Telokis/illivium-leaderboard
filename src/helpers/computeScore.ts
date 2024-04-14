@@ -46,6 +46,10 @@ export function computeScore(
     return 0;
   }
 
+  if (keyTime >= referenceTime * 1.4) {
+    return 0;
+  }
+
   const scoreOffset = getScoreOffset(keyTime, referenceTime);
   const adjustedKeyLevel = keyLevel + scoreOffset;
   const highKeyBonus = Math.max(0, keyLevel - 10);
