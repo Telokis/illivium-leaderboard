@@ -27,6 +27,7 @@ import { getDungeonQueryParamKeys } from "$/helpers/getDungeonQueryParamKeys";
 import { DungeonSpec } from "$/types/DungeonSpec";
 import classNames from "classnames";
 import ImportCharacterModal from "./ImportCharacterModal";
+import { TotalScore } from "./TotalScore";
 
 function extractDungeonInfoFromQueryParams(
   dungeon: DungeonSpec,
@@ -70,7 +71,7 @@ export default function ScoreCalculatorForm() {
       const newParams = new URLSearchParams(searchParams.toString());
 
       newParams.set(key, value);
-      router.replace(`${pathname}?${newParams.toString()}`);
+      router.replace(`${pathname}?${newParams.toString()}`, { scroll: false });
     },
     [searchParams, pathname, router],
   );
@@ -127,15 +128,27 @@ export default function ScoreCalculatorForm() {
           dungeons that will contribute most to your score, and track your
           progress over time. Happy dungeon crawling!
         </Typography>
-        <Box sx={{ textAlign: "right" }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setModalOpen(true);
-            }}
-          >
-            Import Character
-          </Button>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          <div style={{ alignSelf: "center" }}>
+            <TotalScore totalScore={totalScore} />
+          </div>
+          <div style={{ position: "absolute", right: "0" }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              Import Character
+            </Button>
+          </div>
         </Box>
       </Box>
       <TableContainer component={Paper} className={styles.mainScoreTable}>
@@ -165,10 +178,7 @@ export default function ScoreCalculatorForm() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={classNames(styles.totalScoreBlock)}>
-        <span>Total Score: {totalScore.toFixed(1)}</span>
-      </div>
-      <Box p={2} bgcolor="#114355" color="white" textAlign="center">
+      <Box p={2} bgcolor="#114355" color="#FFFFFFAD" textAlign="center">
         <Typography variant="body2">
           Code available on{" "}
           <Link

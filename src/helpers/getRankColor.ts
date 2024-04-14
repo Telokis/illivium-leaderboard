@@ -1,4 +1,10 @@
-function interpolateColor(color1: string, color2: string, ratio: number): string {
+import { lerpBounds } from "./lerp";
+
+function interpolateColor(
+  color1: string,
+  color2: string,
+  ratio: number,
+): string {
   const hexToRgb = (hex: string): number[] => {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
@@ -30,41 +36,41 @@ function interpolateColor(color1: string, color2: string, ratio: number): string
   return rgbToHex(interpolatedRgb);
 }
 
-export function getRankColor(points: number): string {
-  const colorScale: [number, string][] = [
-    [200, "#ffffff"],
-    [250, "#f6fff3"],
-    [375, "#e0ffd3"],
-    [500, "#c8ffb4"],
-    [625, "#adff94"],
-    [750, "#8eff72"],
-    [875, "#67ff4c"],
-    [1000, "#1eff00"],
-    [1120, "#3cf338"],
-    [1240, "#4ce750"],
-    [1360, "#55db64"],
-    [1480, "#5bcf74"],
-    [1600, "#5fc383"],
-    [1720, "#5fb791"],
-    [1840, "#5eab9e"],
-    [1960, "#5aa0aa"],
-    [2080, "#5394b7"],
-    [2200, "#4889c3"],
-    [2320, "#387dcf"],
-    [2440, "#1472db"],
-    [2620, "#5864e2"],
-    [2740, "#864fe9"],
-    [2875, "#a836e9"],
-    [2995, "#bc3fd1"],
-    [3115, "#cc47b8"],
-    [3235, "#d951a0"],
-    [3355, "#e45a88"],
-    [3475, "#ec6370"],
-    [3595, "#f46d56"],
-    [3715, "#fa7738"],
-    [3875, "#ff8000"],
-  ];
+const colorScale: [number, string][] = [
+  [200, "#ffffff"], // 0
+  [250, "#f6fff3"], // 1
+  [375, "#e0ffd3"], // 2
+  [500, "#c8ffb4"], // 3
+  [625, "#adff94"], // 4
+  [750, "#8eff72"], // 5
+  [875, "#67ff4c"], // 6
+  [1000, "#1eff00"], // 7
+  [1120, "#3cf338"], // 8
+  [1240, "#4ce750"], // 9
+  [1360, "#55db64"], // 10
+  [1480, "#5bcf74"], // 11
+  [1600, "#5fc383"], // 12
+  [1720, "#5fb791"], // 13
+  [1840, "#5eab9e"], // 14
+  [1960, "#5aa0aa"], // 15
+  [2080, "#5394b7"], // 16
+  [2200, "#4889c3"], // 17
+  [2320, "#387dcf"], // 18
+  [2440, "#1472db"], // 19
+  [2620, "#5864e2"], // 20
+  [2740, "#864fe9"], // 21
+  [2875, "#a836e9"], // 22
+  [2995, "#bc3fd1"], // 23
+  [3115, "#cc47b8"], // 24
+  [3235, "#d951a0"], // 25
+  [3355, "#e45a88"], // 26
+  [3475, "#ec6370"], // 27
+  [3595, "#f46d56"], // 28
+  [3715, "#fa7738"], // 29
+  [3875, "#ff8000"], // 30
+];
 
+export function getRankColor(points: number): string {
   if (points <= colorScale[0][0]) {
     return colorScale[0][1];
   }
@@ -84,4 +90,16 @@ export function getRankColor(points: number): string {
   }
 
   return "#000000";
+}
+
+export function getRankScale(points: number): number {
+  if (points <= colorScale[0][0]) {
+    return 0;
+  }
+
+  if (points >= colorScale[colorScale.length - 1][0]) {
+    return 1;
+  }
+
+  return lerpBounds(points, 0, colorScale[colorScale.length - 1][0], 0, 1);
 }

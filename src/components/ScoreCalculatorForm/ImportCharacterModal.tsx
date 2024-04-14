@@ -75,7 +75,9 @@ const ImportCharacterModal: React.FC<ImportCharacterModalProps> = ({
 
       const newSearchParams = characterToSearchParams(response);
 
-      router.replace(`${pathname}?${newSearchParams.toString()}`);
+      router.replace(`${pathname}?${newSearchParams.toString()}`, {
+        scroll: false,
+      });
       setLoading(false);
       onClose();
     } catch (error: any) {
