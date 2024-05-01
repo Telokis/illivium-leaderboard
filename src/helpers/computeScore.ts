@@ -4,11 +4,11 @@
  * @returns The number of affixes for the given dungeon level.
  */
 function affixesForLevel(level: number) {
-  if (level >= 14) {
+  if (level >= 10) {
     return 3;
   }
 
-  if (level >= 7) {
+  if (level >= 5) {
     return 2;
   }
 
@@ -52,8 +52,7 @@ export function computeScore(
 
   const scoreOffset = getScoreOffset(keyTime, referenceTime);
   const adjustedKeyLevel = keyLevel + scoreOffset;
-  const highKeyBonus = Math.max(0, keyLevel - 10);
   const nAffixes = affixesForLevel(keyLevel);
 
-  return 20 + adjustedKeyLevel * 5 + highKeyBonus * 2 + nAffixes * 10;
+  return 70 + adjustedKeyLevel * 5 + keyLevel * 2 + nAffixes * 10;
 }
