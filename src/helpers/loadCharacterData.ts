@@ -10,7 +10,7 @@ export interface CharacterSpec {
 
 export async function loadCharacter(
   character: CharacterSpec,
-): Promise<Character> {
+): Promise<Character | null> {
   const { name, realm, region } = character;
 
   // const url = `https://raider.io/api/v1/characters/profile?region=${region}&realm=${realm}&name=${name}&fields=gear%2Cmythic_plus_scores_by_season%3Acurrent%2Cmythic_plus_best_runs%2Cmythic_plus_alternate_runs`;
@@ -19,8 +19,9 @@ export async function loadCharacter(
   const response = await fetch(url, { next: { revalidate: 10 * 60 } });
 
   if (!response.ok) {
-    console.error("Error loading character:", response);
-    throw response;
+    console.error("Error loading character", name, realm, region);
+    console.error(response);
+    return null;
   }
 
   return response.json();
@@ -30,12 +31,14 @@ export async function loadCharacter(
 // Also sort characters by descending score
 export async function loadCharacters(characters: CharacterSpec[]) {
   return Promise.all(characters.map(loadCharacter)).then((characters) => {
-    return characters.sort((a, b) => {
-      const aScore = a.mythic_plus_scores_by_season[0].scores.all;
-      const bScore = b.mythic_plus_scores_by_season[0].scores.all;
+    return characters
+      .filter((c) => c !== null)
+      .sort((a, b) => {
+        const aScore = a.mythic_plus_scores_by_season[0].scores.all;
+        const bScore = b.mythic_plus_scores_by_season[0].scores.all;
 
-      return bScore - aScore;
-    });
+        return bScore - aScore;
+      });
   });
 }
 
@@ -64,7 +67,7 @@ export async function loadCharacterDungeonInfos(
   const response = await fetch(url, { next: { revalidate: 10 * 60 } });
 
   if (!response.ok) {
-    console.error("Error loading character:", response);
+    console.error("Error loading character:", name, realm, region);
     throw response;
   }
 
