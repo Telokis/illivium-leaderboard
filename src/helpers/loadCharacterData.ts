@@ -29,7 +29,9 @@ export async function loadCharacter(
 
 // Function to load multiple characters from a static array of character specs
 // Also sort characters by descending score
-export async function loadCharacters(characters: CharacterSpec[]) {
+export async function loadCharacters(
+  characters: CharacterSpec[],
+): Promise<Array<Character>> {
   return Promise.all(characters.map(loadCharacter)).then((characters) => {
     return characters
       .filter((c) => c !== null)
